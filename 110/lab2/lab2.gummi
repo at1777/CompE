@@ -1,0 +1,4 @@
+version=0.6.0
+typesetter=pdflatex
+steps=texpdf
+root=/home/atuser/git/CompE/110/lab2/report.tex

@@ -1,0 +1,185 @@
+% A skeleton file for producing Computer Engineering reports
+% https://kgcoe-git.rit.edu/jgm6496/KGCOEReport_template
+
+\documentclass[CMPE]{KGCOEReport}
+
+% The following should be changed to represent your personal information
+\newcommand{\classCode}{CMPE 110}  % 4 char code with number
+\newcommand{\name}{Andrei Tumbar}
+\newcommand{\LabSectionNum}{05}
+\newcommand{\LabInstructor}{Mark Byers}	% The slash is to tell LaTeX that the period is between words
+												% not sentences so it spaces correctly. It won't appear in the
+												% final pdf
+\newcommand{\TAs}{Rickie Yeung \\ Tommy Li}
+\newcommand{\LectureSectionNum}{01}
+\newcommand{\LectureInstructor}{Dr.\ Soldavini}
+\newcommand{\exerciseNumber}{2}
+\newcommand{\exerciseDescription}{Ohm's Law}
+\newcommand{\dateDone}{September 05, 2019}
+\newcommand{\dateSubmitted}{September 19, 2019}
+
+\usepackage{circuitikz}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{array}
+\usepackage{pgfplots, pgfplotstable}
+
+\begin{document}
+\maketitle
+
+\section*{Abstract}
+
+Understanding Ohm's Law as well as Kirchoff's loop laws is an important This labratory exercise exposes the relationship between voltage, current, and resistance in both a parallel and series configuration. A powersupply supplied a variable voltage across 3 resistors, two in parrallel and the third in series. An effective resistance was calculated and compared to a measured resistance. Potential drop across resistors was measured at every integer voltage from 2-5V. A Voltage vs. Current graph was generated illustrating the linear relationship between the two variables for ohmic resistors.
+
+\section*{Design Methodology}
+
+The three smallest resistors were determined. Resistors were named $R_1$, $R_2$, and $R_3$ in order by increasing resistance. The actual resistance was measured using the multimeter's ohmeter function (See table 1).
+
+
+\begin{figure}[h!]
+\begin{center}
+\begin{circuitikz}
+\draw
+(0,0) to[battery1, l=V] (0,4) --
+(0,4) to[R, l_=$R_1$] (4,4) --
+(6,4) to[R, l_=$R_3$] (6,0) -- (4,0)
+(4,4) to[R, l_=$R_2$] (4,0) --
+(0,0)
+;
+\end{circuitikz}
+\end{center}
+\caption{Circuit configuration given $R_1$, $R_2$, and $R_3$ have accending resistances.}
+\end{figure}
+
+A circuit was wired on a breadboard such that $R_2$ and $R_3$ were placed in parallel to each other and in series to $R_1$. Figure 1 shows an example circuit in the correct configuration. With the power supply voltage set to 5V, potential drop across $R_1$ and $R_2$ was taken. This step was repeated for 2V, 3V, and 4V across the power supply (table 2).
+
+Current through all three resistors was measured at a 5V total potential (see table 3). An effective resistance for the entire circuit was calculated. First the two parallel branches were combined through the follwoing formula:
+\[
+R_{eq} = \frac{1}{ \sum\frac{1}{R_i} }
+\]
+Resistance of $R_1$ was added to the value about yielding a total effective resistance of the circuit.  
+
+Finally, current through $R_3$ was measured from 2-5V at 1V intervals from the power supply and recorded (See table 4). Using this data, a graph was generated for Voltage vs. Current through $R_3$ (See figure 2).
+
+\section*{Results and Analysis}
+\subsection*{Resistance}
+Measured resistance in $R_1$ $R_2$ and $R_3$ showed great accuracy to the rated resistance. Table 1 shows that all measured resistances are with the tolerance rated for each resistor.
+
+
+\begin{table}[h]
+\caption{Measurements taken for all three resistors.}
+\begin{center}
+\begin{tabular}{cc|c|c}
+& \multicolumn{2}{c}{Banded Values} & Measured Values  \\\cline{2-4}
+\multirow{2}{*}{}
+& Rated Resistance & Rated Tolerance & Actual Resistance \\
+& ($\Omega$) & (\%) & ($\Omega$) \\\cline{2-4}
+$R_1$ & 330 & $\pm$ 5 & 328.00 \\\cline{2-4}
+$R_2$ & 3330 & $\pm$ 5 & 3396.00 \\\cline{2-4}
+$R_3$ & 5600 & $\pm$ 5 & 5598.80 \\\cline{2-4}
+\end{tabular}
+\end{center}
+\end{table}
+
+\subsection*{Voltage}
+As expected, the voltage across $R_1$ and $R_2$ scale proportionally to the voltage across the power supply. 
+{
+\renewcommand{\arraystretch}{1.4}
+\begin{table}[h]
+\caption{Voltage measured across $R_1$ and $R_2$.}
+\begin{center}
+\begin{tabular}{c>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}}
+& $V_{PS}$ & $V_{R_1}$ & $V_{R_2}$ \\\cline{2-4}
+\textasciitilde2V & 1.997 & 0.268 & 1.728 \\\cline{2-4}
+\textasciitilde3V & 2.997 & 0.402 & 2.592 \\\cline{2-4}
+\textasciitilde4V & 3.998 & 0.536 & 3.457 \\\cline{2-4}
+\textasciitilde5V & 4.999 & 0.670 & 4.320
+\end{tabular}
+\end{center}
+\end{table}
+}
+
+\subsection*{Current}
+{
+\renewcommand{\arraystretch}{1.4}
+\begin{table}[h]
+\caption{Voltage measured across $R_1$ and $R_2$.}
+\begin{center}
+\begin{tabular}{>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}}
+$I_{R_1}$ (mA) & $I_{R_2}$ (mA) & $I_{R_3}$ (mA) \\\hline
+2.00 & 1.27 & 0.77
+\end{tabular}
+\end{center}
+\end{table}
+}
+
+Current through any of the three resistors yielded very low numbers because the effective resistance was so high. Effective resistance came out to be $2441.84 \Omega$ calculated from:
+
+\[
+R_{eq} = R_1 + \frac{1}{ \frac{1}{R_2} + \frac{1}{R_3} } = 2441.84\Omega
+\]
+
+\subsection*{Results}
+
+Table 4 was generated by measuring the current through $R_3$ and the power supply at every 1V interval from 2-5V. The last column was generated by applying Ohm's Law $V=IR$.
+
+\begin{table}[htb]
+\caption{Table to test captions and labels}
+\begin{center}
+\begin{tabular}{c|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}}
+Voltage & V\textsubscript{PS} & V\textsubscript{R\textsubscript{3}} & I\textsubscript{PS} & I\textsubscript{R\textsubscript{3}} & R\textsubscript{3} \\
+(V) & (V) & (V) & (mA) & (mA) & ($\Omega$) \\
+\hline
+2 & 1.997 & 1.728 & 0.815 & 0.308 & 5616.88  \\
+3 & 2.997 & 2.592 & 1.220 & 0.463 & 5593.95 \\
+4 & 3.998 & 3.475 & 1.630 & 0.617 & 5607.78 \\
+5 & 4.999 & 4.320 & 2.040 & 0.771 & 5603.11
+\end{tabular}
+\end{center}
+\end{table}
+
+\pgfplotstableread{
+X Y
+0.308 1.728
+0.462 2.592
+0.617 3.475
+0.771 4.320
+}\datatable
+
+\begin{figure}[H]
+\caption{Voltage over $R_3$ vs Current through $R_3$}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={Current [mA]},
+    ylabel={Voltage [V]},
+    xmin=0.2, xmax=0.8,
+    ymin=1, ymax=5,
+    xtick={.2,.4,.6,.8},
+    ytick={2,3,4,5},
+    legend pos=outer north east,
+    ymajorgrids=true,
+    grid style=dashed,
+]
+ 
+\addplot[only marks, mark = *] table {\datatable};
+\addplot [thick] table[
+    y={create col/linear regression={y=Y}}
+] {\datatable};
+\addlegendentry{$data$}
+\addlegendentry{%
+$\pgfmathprintnumber[precision=3]{\pgfplotstableregressiona} \cdot x
+\pgfmathprintnumber[print sign]{\pgfplotstableregressionb}$}
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\end{figure}
+
+Figure 2 displays the data from table 4 for $I_{R_3}$ on the X-axis and $V_{R_3}$ on the Y-axis. The slope in figure 2 represents the resistance of $R_3$ in $k\Omega$ because according to Ohm's Law $R = \frac{V}{I}$.
+
+\section*{Conclusion}
+
+The linear relationship between voltage and current through an ohmic resistor is an important concept in circuits. 
+
+\end{document}
