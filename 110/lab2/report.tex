@@ -29,7 +29,7 @@
 
 \section*{Abstract}
 
-Understanding Ohm's Law as well as Kirchoff's loop laws is an important This labratory exercise exposes the relationship between voltage, current, and resistance in both a parallel and series configuration. A powersupply supplied a variable voltage across 3 resistors, two in parrallel and the third in series. An effective resistance was calculated and compared to a measured resistance. Potential drop across resistors was measured at every integer voltage from 2-5V. A Voltage vs. Current graph was generated illustrating the linear relationship between the two variables for ohmic resistors.
+Understanding Ohm's Law as well as Kirchoff's loop laws is an important is vital when designing circuits. This labratory exercise exposes the relationship between voltage, current, and resistance in both a parallel and series configuration. A powersupply supplied a variable voltage across 3 resistors, two in parrallel and the third in series. An effective resistance was calculated and compared to a measured resistance. Potential drop across resistors was measured at every integer voltage from 2-5V. A Voltage vs. Current graph was generated illustrating the linear relationship between the two variables for ohmic resistors.
 
 \section*{Design Methodology}
 
@@ -41,9 +41,9 @@ The three smallest resistors were determined. Resistors were named $R_1$, $R_2$,
 \begin{circuitikz}
 \draw
 (0,0) to[battery1, l=V] (0,4) --
-(0,4) to[R, l_=$R_1$] (4,4) --
-(6,4) to[R, l_=$R_3$] (6,0) -- (4,0)
-(4,4) to[R, l_=$R_2$] (4,0) --
+(0,4) to[R, l_=$R_1$, i_=$I_1$, v^=$V_1$] (4,4) --
+(6,4) to[R, l_=$R_3$, i_=$I_3$, v^={$V_2$ $V_3$}] (6,0) -- (4,0)
+(4,4) to[R, l_=$R_2$, i_=$I_2$] (4,0) --
 (0,0)
 ;
 \end{circuitikz}
@@ -106,7 +106,7 @@ As expected, the voltage across $R_1$ and $R_2$ scale proportionally to the volt
 \caption{Voltage measured across $R_1$ and $R_2$.}
 \begin{center}
 \begin{tabular}{>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}}
-$I_{R_1}$ (mA) & $I_{R_2}$ (mA) & $I_{R_3}$ (mA) \\\hline
+$I_1$ (mA) & $I_2$ (mA) & $I_3$ (mA) \\\hline
 2.00 & 1.27 & 0.77
 \end{tabular}
 \end{center}
