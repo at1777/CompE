@@ -5,7 +5,7 @@
 
 % The following should be changed to represent your personal information
 \newcommand{\classCode}{CMPE 110}  % 4 char code with number
-\newcommand{\name}{Andrei Tumbar}
+\newcommand{\name}{Andrei Tumbar\\ Karl Giczkowski}
 \newcommand{\LabSectionNum}{05}
 \newcommand{\LabInstructor}{Mark Byers}	% The slash is to tell LaTeX that the period is between words
 												% not sentences so it spaces correctly. It won't appear in the
@@ -108,11 +108,14 @@ Table 2 shows the data taken for the voltage drop across $R_1$ and $R_2$ for var
 }
 
 As expected, the voltage across $R_1$ and $R_2$ scale proportionally to the voltage across the power supply. 
+\pagebreak
 
 \subsection*{Current}
+
+Table 3 shows the current measured through each of the three resistors.
 {
 \renewcommand{\arraystretch}{1.4}
-\begin{table}[h]
+\begin{table}[h!]
 \caption{Voltage measured across $R_1$ and $R_2$.}
 \begin{center}
 \begin{tabular}{>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}}
@@ -123,9 +126,10 @@ $I_1$ (mA) & $I_2$ (mA) & $I_3$ (mA) \\\hline
 \end{table}
 }
 
-Current through any of the three resistors yielded very low numbers because the effective resistance was so high. Effective resistance came out to be $2441.84 \Omega$ calculated from:
+$I_1$ is the total current which can also be approximatly calculated by adding $I_2$ and $I_3$. Current through all three resistors yielded very low numbers because the effective resistance was so high and the relative voltage was low. Effective resistance was calculated in equation \ref{eq:2}:
 
 \begin{gather}
+\label{eq:2}
 R_{eq} = R_1 + \frac{1}{ \frac{1}{R_2} + \frac{1}{R_3} } = 2441.84\Omega
 \end{gather}
 
@@ -148,6 +152,8 @@ Voltage & V\textsubscript{PS} & V\textsubscript{R\textsubscript{3}} & I\textsubs
 \end{center}
 \end{table}
 
+Table 4 yielded multiple resistance values that had high relative accuracy. Figure 2 below graphs the total voltage ($V_{PS}$) vs the current through $I_3$.
+
 \pgfplotstableread{
 X Y
 0.308 1.728
@@ -160,8 +166,8 @@ X Y
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[
-    xlabel={Current [mA]},
-    ylabel={Voltage [V]},
+    xlabel={Current - $I_{R_3}$ [mA]},
+    ylabel={Voltage - $V_{PS}$ [V]},
     xmin=0.2, xmax=0.8,
     ymin=1, ymax=5,
     xtick={.2,.4,.6,.8},
