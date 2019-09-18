@@ -10,7 +10,6 @@
 %%%%%%% Required packages
 \RequirePackage{multicol} %Make columns
 \RequirePackage[margin=1in]{geometry} %Change margins
-\RequirePackage[most]{tcolorbox}  % For the "RIT" box on EEEE cover
 
 \setlength{\parindent}{0pt} % Don't indent paragraphs
 
@@ -72,40 +71,7 @@
 		\newpage
 	}
 }
-%%%%%%% Write a EE report
-\DeclareOption{EEEE}{
-	\newcommand{\KGCOEDocType}{EEEE}
 
-	\renewcommand{\maketitle}{%
-
-		\begin{flushright}\begin{tcolorbox}[colback=black,coltext=white,halign=center,boxrule=0pt,
-			sharp corners, width=0.5\textwidth, fontupper={\Large \bfseries}]
-			Rochester Institute of \\ Technology
-		\end{tcolorbox}\end{flushright}
-
-		\huge
-		\textbf{\classCode \ - \className \ Technical Memo}\\
-		\normalsize
-
-		\noindent
-		\begin{tabular}{ll}
-		\textbf{From:} &\name\\
-
-		% Optional parameter of partner
-		\ifdefined\partnerName
-			\textbf{Partner:} &\partnerName\\
-			\\
-		\fi
-
-		\textbf{To:} &\TAs \ | Section \LabSectionNum\\
-		\textbf{Date:} &Performed: \dateDone; Due: \dateSubmitted\\
-		\textbf{Subject:} &Lab \exerciseNumber: \exerciseDescription
-		\end{tabular}
-
-		\noindent
-		\rule{\textwidth}{.1pt}
-	}
-}
 % Pass any other options to
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions

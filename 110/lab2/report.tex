@@ -9,7 +9,7 @@
 \newcommand{\LabSectionNum}{05}
 \newcommand{\LabInstructor}{Mark Byers}	% The slash is to tell LaTeX that the period is between words
 												% not sentences so it spaces correctly. It won't appear in the
-												% final pdf
+												% final PDF
 \newcommand{\TAs}{Rickie Yeung \\ Tommy Li}
 \newcommand{\LectureSectionNum}{01}
 \newcommand{\LectureInstructor}{Dr.\ Soldavini}
@@ -23,13 +23,15 @@
 \usepackage{float}
 \usepackage{array}
 \usepackage{pgfplots, pgfplotstable}
+\usepackage{amsmath}
+\usepackage{amssymb}
 
 \begin{document}
 \maketitle
 
 \section*{Abstract}
 
-Understanding Ohm's Law as well as Kirchoff's loop laws is an important is vital when designing circuits. This labratory exercise exposes the relationship between voltage, current, and resistance in both a parallel and series configuration. A powersupply supplied a variable voltage across 3 resistors, two in parrallel and the third in series. An effective resistance was calculated and compared to a measured resistance. Potential drop across resistors was measured at every integer voltage from 2-5V. A Voltage vs. Current graph was generated illustrating the linear relationship between the two variables for ohmic resistors.
+Understanding Ohm's Law as well as Kirchoff's loop laws is important and vital when designing circuits. This laboratory exercise exposes the relationship between voltage, current, and resistance in both a parallel and series configuration. A power supply supplied a variable voltage across 3 resistors, two in parallel and the third in series. An effective resistance was calculated and compared to a measured resistance. Potential drop across resistors was measured at every integer voltage from 2-5V. A Voltage vs. Current graph was generated illustrating the linear relationship between the two variables for ohmic resistors. This exercise proves Kirchoff's loop laws and Ohm's law.
 
 \section*{Design Methodology}
 
@@ -48,23 +50,26 @@ The three smallest resistors were determined. Resistors were named $R_1$, $R_2$,
 ;
 \end{circuitikz}
 \end{center}
-\caption{Circuit configuration given $R_1$, $R_2$, and $R_3$ have accending resistances.}
+\caption{Circuit configuration given $R_1$, $R_2$, and $R_3$ have acceding resistances.}
 \end{figure}
 
-A circuit was wired on a breadboard such that $R_2$ and $R_3$ were placed in parallel to each other and in series to $R_1$. Figure 1 shows an example circuit in the correct configuration. With the power supply voltage set to 5V, potential drop across $R_1$ and $R_2$ was taken. This step was repeated for 2V, 3V, and 4V across the power supply (table 2).
+A circuit was wired on a breadboard such that $R_2$ and $R_3$ were placed in parallel to each other and in series to $R_1$. Figure 1 shows an example circuit in the correct configuration. With the power supply voltage set to 5V, potential drop across $R_1$ and $R_2$ was taken. This step was repeated for 2V, 3V, and 4V across the power supply.
 
-Current through all three resistors was measured at a 5V total potential (see table 3). An effective resistance for the entire circuit was calculated. First the two parallel branches were combined through the follwoing formula:
-\[
+Current through all three resistors was measured at a 5V total potential. An effective resistance for the entire circuit was calculated. First the two parallel branches were combined through equation \ref{eq:1}:
+
+\begin{gather}
+\label{eq:1}
 R_{eq} = \frac{1}{ \sum\frac{1}{R_i} }
-\]
+\end{gather}
+
 Resistance of $R_1$ was added to the value about yielding a total effective resistance of the circuit.  
 
-Finally, current through $R_3$ was measured from 2-5V at 1V intervals from the power supply and recorded (See table 4). Using this data, a graph was generated for Voltage vs. Current through $R_3$ (See figure 2).
+Finally, current through $R_3$ was measured from 2-5V at 1V intervals from the power supply and recorded. Using this data, a graph was generated for Voltage vs. Current through $R_3$.
 
 \section*{Results and Analysis}
 \subsection*{Resistance}
-Measured resistance in $R_1$ $R_2$ and $R_3$ showed great accuracy to the rated resistance. Table 1 shows that all measured resistances are with the tolerance rated for each resistor.
 
+Table 1 contains measured resistance for each resistor. Rated resistance and tolerance are also shown.
 
 \begin{table}[h]
 \caption{Measurements taken for all three resistors.}
@@ -81,8 +86,11 @@ $R_3$ & 5600 & $\pm$ 5 & 5598.80 \\\cline{2-4}
 \end{center}
 \end{table}
 
+Measured resistance in $R_1$ $R_2$ and $R_3$ showed great accuracy to that of the rated resistance. 
+
 \subsection*{Voltage}
-As expected, the voltage across $R_1$ and $R_2$ scale proportionally to the voltage across the power supply. 
+Table 2 shows the data taken for the voltage drop across $R_1$ and $R_2$ for varying power supply voltage from 2V to 5V.
+
 {
 \renewcommand{\arraystretch}{1.4}
 \begin{table}[h]
@@ -98,6 +106,8 @@ As expected, the voltage across $R_1$ and $R_2$ scale proportionally to the volt
 \end{center}
 \end{table}
 }
+
+As expected, the voltage across $R_1$ and $R_2$ scale proportionally to the voltage across the power supply. 
 
 \subsection*{Current}
 {
@@ -115,9 +125,9 @@ $I_1$ (mA) & $I_2$ (mA) & $I_3$ (mA) \\\hline
 
 Current through any of the three resistors yielded very low numbers because the effective resistance was so high. Effective resistance came out to be $2441.84 \Omega$ calculated from:
 
-\[
+\begin{gather}
 R_{eq} = R_1 + \frac{1}{ \frac{1}{R_2} + \frac{1}{R_3} } = 2441.84\Omega
-\]
+\end{gather}
 
 \subsection*{Results}
 
@@ -147,7 +157,6 @@ X Y
 }\datatable
 
 \begin{figure}[H]
-\caption{Voltage over $R_3$ vs Current through $R_3$}
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[
@@ -157,7 +166,7 @@ X Y
     ymin=1, ymax=5,
     xtick={.2,.4,.6,.8},
     ytick={2,3,4,5},
-    legend pos=outer north east,
+    legend pos=north west,
     ymajorgrids=true,
     grid style=dashed,
 ]
@@ -173,6 +182,7 @@ $\pgfmathprintnumber[precision=3]{\pgfplotstableregressiona} \cdot x
 
 \end{axis}
 \end{tikzpicture}
+\caption{Voltage over $R_3$ vs Current through $R_3$}
 \end{center}
 \end{figure}
 
@@ -180,6 +190,6 @@ Figure 2 displays the data from table 4 for $I_{R_3}$ on the X-axis and $V_{R_3}
 
 \section*{Conclusion}
 
-The linear relationship between voltage and current through an ohmic resistor is an important concept in circuits. 
+This laboratory exercise was to expose the relationship between voltage, current, and resistance in both a parallel and series circuit using Kirchoff’s loop laws and Ohm’s Law. Using the power supply, varying voltages were applied across three resistors, two in parallel and the third in series. Using the multimeter, the resistance, current, and voltage was taken across the power supply and resistors for 2, 3, 4, and 5 volts. $R_1$, $R_2$, and $R_3$ showed great accuracy to their banded resistances compared to their actual measured resistances from the multimeter. The voltage across $R_1$ and $R_2$ were proportional to the voltage across the power supply, proving Kirchoff’s voltage loop law. Because the linear regression closely correlated to the data, Ohm’s Law is proven. This exercise was effective in proving both Kirchoff’s loop laws and Ohm’s Law.
 
 \end{document}
