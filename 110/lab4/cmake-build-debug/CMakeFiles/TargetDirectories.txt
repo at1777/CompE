@@ -1,0 +1,9 @@
+/home/atuser/git/CompE/110/lab4/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/atuser/git/CompE/110/lab4/cmake-build-debug/CMakeFiles/lab5_condi.dir
+/home/atuser/git/CompE/110/lab4/cmake-build-debug/CMakeFiles/variables.dir
+/home/atuser/git/CompE/110/lab4/cmake-build-debug/CMakeFiles/lab5.dir
+/home/atuser/git/CompE/110/lab4/cmake-build-debug/CMakeFiles/lab5_prepos.dir
+/home/atuser/git/CompE/110/lab4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/atuser/git/CompE/110/lab4/cmake-build-debug/CMakeFiles/lab4.dir
+/home/atuser/git/CompE/110/lab4/cmake-build-debug/CMakeFiles/ohms_law.dir
+/home/atuser/git/CompE/110/lab4/cmake-build-debug/CMakeFiles/functions.dir

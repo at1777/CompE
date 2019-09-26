@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/ohms_law.dir/Lab_ohm.cpp.o  -o ohms_law 
