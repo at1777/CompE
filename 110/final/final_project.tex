@@ -1,0 +1,197 @@
+% A skeleton file for producing Computer Engineering reports
+% https://kgcoe-git.rit.edu/jgm6496/KGCOEReport_template
+
+\documentclass[CMPE]{KGCOEReport}
+
+% The following should be changed to represent your personal information
+\newcommand{\classCode}{CMPE 110}  % 4 char code with number
+\newcommand{\name}{Andrei Tumbar \\ Karl Giczkowski}
+\newcommand{\LabSectionNum}{05}
+\newcommand{\LabInstructor}{Mark Byers}	% The slash is to tell LaTeX that the period is between words
+												% not sentences so it spaces correctly. It won't appear in the
+												% final pdf
+\newcommand{\TAs}{Rickie Yeung \\ Tommy Li \\ Piers Kwan}
+\newcommand{\LectureSectionNum}{01}
+\newcommand{\LectureInstructor}{Dr.\ Soldavini}
+\newcommand{\exerciseNumber}{7}
+\newcommand{\exerciseDescription}{Robot Project}
+\newcommand{\dateDone}{November 03 - 17, 2019}
+\newcommand{\dateSubmitted}{December 05, 2019}
+
+\usepackage{listings}
+\usepackage{caption}
+\def\code#1{\texttt{#1}}
+
+\begin{document}
+\maketitle
+
+\section*{Abstract}
+
+Understanding C++ and robot control is the first big step into computer engineering. This laboratory exercise challenges student to implement all that they have learned over the semester by programming an Arduino robot to navigate a course with various contraints. Using Energia\textsuperscript{TM}, drivers were provided for the motor and infrared sensors for the students to control. Students were expected to use these drivers to develop a program that consistently followed a course.
+
+\section*{Design Methodology}
+
+Students designed the program to be as easy to work with as possible. Code was divided into multiple files based on their functionality to provide the programmer with a more efficient workspace.
+
+\subsection*{Driving Straight and Turning}
+
+The encoders were used to get the counts for both the right and left motors. Each count value, represents a fraction of a turn from that wheel. The encoders were later used to
+write the drive straight function and to turn without dead reckoning.
+
+\begin{center}
+\begin{lstlisting}[language=C]
+void driveStraight(int targetSpeed, int distance, int (*cond)());
+
+...
+  int angle_left = getEncoderLeftCnt() - start_angle_left;
+  int angle_right = getEncoderRightCnt() - start_angle_right;
+  
+  while (angle_left < distance || distance == -1) {
+    wait(10);
+    angle_left = getEncoderLeftCnt() - start_angle_left;
+    angle_right = getEncoderRightCnt() - start_angle_right;
+    
+
+    if (angle_left > angle_right) {
+      leftSpeed = targetSpeed - 1;
+      rightSpeed = targetSpeed + 1;
+    }
+    else {
+      leftSpeed = targetSpeed + 1;
+      rightSpeed = targetSpeed - 1;
+    }
+    
+    // set speed for both motors
+    left_motor.setSpeed(leftSpeed);
+    right_motor.setSpeed(rightSpeed);
+
+    if (cond) {
+      if (!cond())
+        break;
+    }
+  }
+...
+\end{lstlisting}
+\captionof{figure}{Part of the \code{driveStraight()} implmentation}
+\end{center}
+
+Figure 1, \code{driveStraight()} was written to take a target speed and a distance. The third argument is a function pointer that, if not \code{NULL}, will be checked on each iteration of the control loop and will break the loop if ever false. This can act as a secondary condition beyond distance to exit this function. The inside of the loop will iterate around every 10ms. On every iteration, the encoder will verify that both wheels have traveled the same distance and otherwise will reset the speed of each wheel to correct the motion of the robot. \\
+
+When the distance is set to \code{-1}, the loop will ignore a distance and only focus on the \code{cond()} function to break the loop.
+
+
+\subsection*{Line Following}
+
+The light sensors give a value based on the color reflected off of different surfaces. When testing the light sensors, the students . The line that was to be followed was white tape on a dark grey carpet, which may cause conflict in the readings of the light sensors. The extensive testing of different white values on a variety of surfaces, was to ensure that there would be no flaw in reading the white line.
+
+
+\begin{center}
+\begin{lstlisting}[language=C]
+void followLine();
+
+...
+ while (found_line) {
+    // Check if all are on
+    int all_on = 1;
+    for (int i = 0; i < TOTAL_LS_SENSORS; i++) {
+      if (!lineSensorValues[i]) {
+        all_on = 0;
+        break;
+      }
+    }
+    if (all_on) {
+      /* Turn right */
+      rightSpeed = 0;
+      leftSpeed = speed + 10;
+    }
+    else if (lineSensorValues[7]) {
+      /* Turn left */
+      leftSpeed = 0;
+      rightSpeed = speed + 5;
+    }
+    else if (lineSensorValues[0]) {
+      /* Turn right */
+      rightSpeed = 0;
+      leftSpeed = speed + 5;
+    }
+    else {
+      rightSpeed = speed;
+      leftSpeed = speed;
+    }
+...
+\end{lstlisting}
+\captionof{figure}{Part of the \code{followLine()} implmentation}
+\end{center}
+
+The function in Figure 2, was used to follow the white line. It utilized the four outermost sensors on the bottom of the robot. The two outermost sensors on each end of the sensor strip containing eight sensors were used to determine on whether or not to turn when the line had a bend in it. When the sensors on the right hit the line and the sensor was under the threshold. The robot would then stop the right motor and speed up the left motor to turn right. The same opposite would occur when one of the two left sensors were under the threshold. When all the sensors read under the threashold meaning the robot was perpendicular to the line, the robot would turn left. This ensured that when the robot was on the line, it would not leave the line. \\
+
+The function to refresh the value of the sensors is not shown. This function will initialize the \code{lineSensorsValues} array with \code{0} or \code{1} corresponding to whether the sensors sees a white line or not.
+
+\subsection*{Bump Detection}
+
+Bump detection is one of the constraints during line following. The robot is meant to stop driving when one of the bump sensors is depressed. 
+
+\begin{center}
+\begin{lstlisting}[language=C]
+int getBump() {
+  /* Check every bump sensor until one is on */
+  for (int i = 0; i < 6; i++) {
+    if (bump_sw[i].read() == 0)
+      return 1;
+  }
+
+  return 0;
+}
+\end{lstlisting}
+\captionof{figure}{The \code{getBump()} implmentation}
+\end{center}
+
+The code from Figure 3 will read the value of every sensor and return \code{true} if one of the sensors is depressed. 
+
+\subsection*{Line sensing}
+
+As described above, a white line is detected if a sensor has a reading below a certain threshold. 
+
+\begin{center}
+\begin{lstlisting}[language=C]
+#define WHITE_THRESHOLD 730
+
+int getLineWeight() {
+  qtrc.read(lineSensorValues);
+  int found_line = 0;
+  for (int i = 0; i < TOTAL_LS_SENSORS; i++) {
+    if (lineSensorValues[i] < WHITE_THRESHOLD) {
+      lineSensorValues[i] = 1;
+      found_line = 1;
+    }
+    else
+      lineSensorValues[i] = 0;
+  }
+
+  return found_line;
+}
+\end{lstlisting}
+\captionof{figure}{The \code{getBump()} implmentation}
+\end{center}
+
+
+
+\section*{Results and Analysis}
+\subsection*{Maze Section}
+
+Table 1 contains measured resistance for each resistor. Rated resistance and tolerance are also shown.
+
+
+Measured resistance in $R_1$ $R_2$ and $R_3$ showed great accuracy to that of the rated resistance. 
+
+\subsection*{Line following}
+Table 2 shows the data taken for the voltage drop across $R_1$ and $R_2$ for varying powersupply voltage from 2V to 5V.
+
+
+As expected, the voltage across $R_1$ and $R_2$ scale proportionally to the voltage across the power supply. 
+
+\section*{Conclusion}
+
+This laboratory exercise was to expose the relationship between voltage, current, and resistance in both a parallel and series circuit using Kirchoff’s loop laws and Ohm’s Law. Using the power supply, varying voltages were applied across three resistors, two in parallel and the third in series. Using the multimeter, the resistance, current, and voltage was taken across the power supply and resistors for 2, 3, 4, and 5 volts. $R_1$, $R_2$, and $R_3$ showed great accuracy to their banded resistances compared to their actual measured resistances from the multimeter. The voltage across $R_1$ and $R_2$ were proportional to the voltage across the power supply, proving Kirchoff’s voltage loop law. Because the linear regression closely correlated to the data, Ohm’s Law is proven. This exercise was effective in proving both Kirchoff’s loop laws and Ohm’s Law.
+
+\end{document}
